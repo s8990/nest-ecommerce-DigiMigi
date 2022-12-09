@@ -63,10 +63,13 @@ export class UserService {
     });
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
-    const user = await this.findById(id);
-    return this.userRepository.save({ ...user, ...updateUserDto });
-    // return this.userRepository.update(id, updateUserDto);
+  async updateUser(
+    userId: number,
+    updateUserDto: UpdateUserDto,
+  ): Promise<UserEntity> {
+    const user = await this.findById(userId);
+    Object.assign(user, updateUserDto);
+    return await this.userRepository.save(user);
   }
 
   async remove(id: number) {
@@ -76,6 +79,15 @@ export class UserService {
   }
 
   buildCreateUserResponse(user: UserEntity): UserResponseInterface {
+    return {
+      user: {
+        ...user,
+        token: this.generateJwt(user),
+      },
+    };
+  }
+
+  buildUpdateUserResponse(user: UserEntity): UserResponseInterface {
     return {
       user: {
         ...user,
