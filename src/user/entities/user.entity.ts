@@ -30,7 +30,7 @@ export class UserEntity {
   @Column()
   mobile: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
 
   @Column({ default: '' })
