@@ -8,6 +8,7 @@ import {
   Delete,
   UsePipes,
   ValidationPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from '@/user/services/user.service';
 import { CreateUserDto } from '@/user/dto/create-user.dto';
@@ -18,12 +19,14 @@ import { RegisterDto } from '@/user/dto/register.dto';
 import { LoginDto } from '@/user/dto/login.dto';
 import { User } from '@/user/decorators/user.decorator';
 import { UserEntity } from '@/user/entities/user.entity';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('api/users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('getuser')
+  @UseGuards(AuthGuard)
   async currentUser(@User() user: UserEntity): Promise<AuthResponseInterface> {
     return this.userService.buildAuthResponse(user);
   }
