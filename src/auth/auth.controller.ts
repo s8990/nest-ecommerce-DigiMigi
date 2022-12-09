@@ -12,6 +12,8 @@ import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { AuthResponseInterface } from './types/authResponse.interface';
 import { ExpressRequest } from '@/types/expressRequest.interface';
+import { User } from '@/user/decorators/user.decorator';
+import { UserEntity } from '@/user/entities/user.entity';
 
 @Controller('api/auth')
 export class AuthController {
@@ -36,8 +38,7 @@ export class AuthController {
   }
 
   @Get('getuser')
-  async currentUser(@Req() request: ExpressRequest): Promise<AuthResponseInterface> {
-    console.log('current user in controller', request.user)
-    return 'getuser' as any;
+  async currentUser(@User() user: UserEntity): Promise<AuthResponseInterface> {
+    return this.authService.buildAuthResponse(user);
   }
 }
