@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TagEntity } from './entities/tag.entity';
-
+// import { ArrayContains } from 'typeorm';
 @Injectable()
 export class TagService {
   constructor(
@@ -12,5 +12,9 @@ export class TagService {
 
   async findAll(): Promise<TagEntity[]> {
     return await this.tagRepository.find();
+  }
+
+  findOne(id: number): Promise<TagEntity> {
+    return this.tagRepository.findOneBy({ id });
   }
 }
