@@ -39,6 +39,10 @@ export class AuthService {
     return await this.userRepository.save(newUser);
   }
 
+  async login() {
+    
+  }
+
   generateJwt(user: UserEntity): string {
     return sign(
       {
