@@ -51,21 +51,22 @@ export class UserService {
     });
   }
 
-  findOne(id: number): Promise<UserEntity> {
-    return this.userRepository.findOneBy({ id });
-    // return this.userRepository.find({
-    //   where: { id },
-    // });
+  async findById(id: number): Promise<UserEntity> {
+    return this.userRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const user = await this.findOne(id);
+    const user = await this.findById(id);
     return this.userRepository.save({ ...user, ...updateUserDto });
     // return this.userRepository.update(id, updateUserDto);
   }
 
   async remove(id: number) {
-    const user = await this.findOne(id);
+    const user = await this.findById(id);
     return this.userRepository.remove(user);
     // return this.userRepository.delete(user);
   }
