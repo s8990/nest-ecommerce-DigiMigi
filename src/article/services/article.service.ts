@@ -6,6 +6,7 @@ import { CreateArticleDto } from '../dto/create-article.dto';
 import { ArticleEntity } from '../entities/article.entity';
 import { ArticleResponseInterface } from '../types/articleResponse.interface';
 import slugify from 'slugify';
+import { UpdateArticleDto } from '../dto/update-article.dto';
 
 @Injectable()
 export class ArticleService {
@@ -65,5 +66,25 @@ export class ArticleService {
     }
 
     return await this.articleRepository.delete({ slug });
+  }
+
+  async updateArticleBySlug(
+    slug: string,
+    currentUserId: number,
+    updateArticleDto: UpdateArticleDto,
+  ):Promise<ArticleEntity> {
+    const article = await this.findOneBySlug(slug);
+
+    if (!article) {
+      throw new HttpException('Article does not exist', HttpStatus.NOT_FOUND);
+    }
+
+    if (article.author.id !== currentUserId) {
+      throw new HttpException('You are not an author', HttpStatus.FORBIDDEN);
+    }
+
+    Object.assign(article, updateArticleDto)
+
+    return await this.articleRepository.save(article)
   }
 }
