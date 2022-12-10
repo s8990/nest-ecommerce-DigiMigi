@@ -4,8 +4,10 @@ import {
   Column,
   PrimaryGeneratedColumn,
   BeforeInsert,
+  OneToMany,
 } from 'typeorm';
 import { hash } from 'bcrypt';
+import { ArticleEntity } from '@/article/entities/article.entity';
 
 // export enum UserRole {
 //   SUPER_ADMIN = 'Super Admin',
@@ -53,4 +55,7 @@ export class UserEntity {
   async hashPassword() {
     this.password = await hash(this.password, 10);
   }
+
+  @OneToMany(() => ArticleEntity, (article) => article.author)
+  articles: ArticleEntity[];
 }
