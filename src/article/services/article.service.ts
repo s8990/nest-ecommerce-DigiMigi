@@ -1,19 +1,65 @@
 import { UserEntity } from '@/user/entities/user.entity';
 import { HttpException, HttpStatus, Injectable, Param } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, getRepository, Repository } from 'typeorm';
 import { CreateArticleDto } from '../dto/create-article.dto';
 import { ArticleEntity } from '../entities/article.entity';
 import { ArticleResponseInterface } from '../types/articleResponse.interface';
 import slugify from 'slugify';
 import { UpdateArticleDto } from '../dto/update-article.dto';
+import { ArticlesResponseInterface } from '../types/articlesResponseInterface.type';
 
 @Injectable()
 export class ArticleService {
   constructor(
     @InjectRepository(ArticleEntity)
     private readonly articleRepository: Repository<ArticleEntity>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
   ) {}
+
+  async findAll(
+    currentUserId: number,
+    query: any,
+  ): Promise<ArticlesResponseInterface> {
+    const queryBuilder = this.articleRepository
+      .createQueryBuilder('articles')
+      .leftJoinAndSelect('articles.author', 'author');
+    // .select(['articles.id']);
+
+    if (query.tag) {
+      queryBuilder.andWhere('articles.tagList LIKE :tag', {
+        tag: `%${query.tag}%`,
+      });
+    }
+
+    if (query.author) {
+      const author = await this.userRepository.findOne({
+        where: {
+          username: query.author,
+        },
+      });
+      queryBuilder.andWhere('articles.authorId = :id', {
+        id: author.id,
+      });
+    }
+
+    queryBuilder.orderBy('articles.createdAt', 'DESC');
+
+    const articlesCount = await queryBuilder.getCount();
+
+    if (query.limit) {
+      queryBuilder.limit(query.limit);
+    }
+
+    if (query.offset) {
+      queryBuilder.offset(query.offset);
+    }
+
+    const articles = await queryBuilder.getMany();
+
+    return { articles, articlesCount };
+  }
 
   async createArticle(
     currentUser: UserEntity,
@@ -72,7 +118,7 @@ export class ArticleService {
     slug: string,
     currentUserId: number,
     updateArticleDto: UpdateArticleDto,
-  ):Promise<ArticleEntity> {
+  ): Promise<ArticleEntity> {
     const article = await this.findOneBySlug(slug);
 
     if (!article) {
@@ -83,8 +129,8 @@ export class ArticleService {
       throw new HttpException('You are not an author', HttpStatus.FORBIDDEN);
     }
 
-    Object.assign(article, updateArticleDto)
+    Object.assign(article, updateArticleDto);
 
-    return await this.articleRepository.save(article)
+    return await this.articleRepository.save(article);
   }
 }

@@ -6,23 +6,31 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { create } from 'domain';
 import { ArticleService } from '@/article/services/article.service';
 import { AuthGuard } from '@/user/guards/auth.guard';
 import { User } from '@/user/decorators/user.decorator';
 import { CreateArticleDto } from '../dto/create-article.dto';
 import { UserEntity } from '@/user/entities/user.entity';
 import { ArticleResponseInterface } from '../types/articleResponse.interface';
-import { get } from 'http';
 import { UpdateArticleDto } from '../dto/update-article.dto';
+import { ArticlesResponseInterface } from '../types/articlesResponseInterface.type';
 
 @Controller('api/articles')
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
+
+  @Get()
+  async findAll(
+    @User('id') currentUserId: number,
+    @Query() query: any,
+  ): Promise<ArticlesResponseInterface> {
+    return await this.articleService.findAll(currentUserId, query);
+  }
 
   @Post('create')
   @UseGuards(AuthGuard)
