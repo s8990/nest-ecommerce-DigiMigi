@@ -32,6 +32,8 @@ Required fileds: `username`, `mobile`, `password`
 
 Authentication optional, returns a Profile
 
+output :
+
 ```
 {
   "profile": {
@@ -42,3 +44,19 @@ Authentication optional, returns a Profile
   }
 }
 ```
+
+## Follow User
+
+`POST /api/profiles/:username/follow`
+
+Authentication required, returns a Profile
+
+No additional parameters required
+
+## Unfollow User
+
+`DELETE /api/profiles/:username/follow`
+
+Authentication required, returns a Profile
+
+No additional parameters required
