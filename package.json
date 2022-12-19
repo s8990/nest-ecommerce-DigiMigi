@@ -23,7 +23,8 @@
     "migration:generate": "npm run typeorm -- migration:generate",
     "migration:run": "npm run typeorm -- migration:run",
     "migration:revert": "npm run typeorm -- migration:revert",
-    "db:drop": "yarn typeorm schema:drop"
+    "db:drop": "yarn typeorm schema:drop",
+    "db:seed": "npm run build && npx typeorm -d src/seeds/1670487485313-SeedDb.ts migration:run"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
