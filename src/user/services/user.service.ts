@@ -20,6 +20,10 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<UserEntity> {
+    const errorResponse = {
+      errors: {},
+    };
+
     const userByEmail = await this.userRepository.findOne({
       where: {
         email: createUserDto.email,
@@ -32,11 +36,16 @@ export class UserService {
       },
     });
 
+    if (userByEmail) {
+      errorResponse.errors['email'] = 'has already been taken';
+    }
+
+    if (userByUsername) {
+      errorResponse.errors['username'] = 'has already been taken';
+    }
+
     if (userByEmail || userByUsername) {
-      throw new HttpException(
-        'Email Or Username are taken!',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
+      throw new HttpException(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     const newUser = this.userRepository.create(createUserDto);
@@ -103,6 +112,10 @@ export class UserService {
   // ========================================
 
   async register(registerDto: RegisterDto): Promise<UserEntity> {
+    const errorResponse = {
+      errors: {},
+    };
+
     const userByEmail = await this.userRepository.findOne({
       where: {
         email: registerDto.email,
@@ -115,11 +128,16 @@ export class UserService {
       },
     });
 
+    if (userByEmail) {
+      errorResponse.errors['email'] = 'has already been taken';
+    }
+
+    if (userByUsername) {
+      errorResponse.errors['username'] = 'has already been taken';
+    }
+
     if (userByEmail || userByUsername) {
-      throw new HttpException(
-        'Email Or Username are taken!',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
+      throw new HttpException(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     const newUser = this.userRepository.create(registerDto);
@@ -127,6 +145,12 @@ export class UserService {
   }
 
   async login(loginDto: LoginDto): Promise<UserEntity> {
+    const errorResponse = {
+      errors: {
+        'email or password': 'is invalid',
+      },
+    };
+
     const userByUsername = await this.userRepository.findOne({
       where: {
         username: loginDto.username,
@@ -144,10 +168,7 @@ export class UserService {
     });
 
     if (!userByUsername) {
-      throw new HttpException(
-        'Credentials are not valid!',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
+      throw new HttpException(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     // loginDto.password = plained password
@@ -158,10 +179,7 @@ export class UserService {
     );
 
     if (!isPasswordCorrect) {
-      throw new HttpException(
-        'Credentials are not valid!',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
+      throw new HttpException(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     delete userByUsername.password;
