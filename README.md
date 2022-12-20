@@ -22,9 +22,9 @@ Required fileds: `username`, `mobile`, `password`
 
 ## Registration
 
-...   ...   ...   ...   ...   ...   ...   ...   
-...   ...   ...   ...   ...   ...   ...   ...   
-...   ...   ...   ...   ...   ...   ...   ...   
+... ... ... ... ... ... ... ...  
+... ... ... ... ... ... ... ...  
+... ... ... ... ... ... ... ...
 
 ## Get Profile
 
@@ -60,3 +60,11 @@ No additional parameters required
 Authentication required, returns a Profile
 
 No additional parameters required
+
+## Feed Articles
+
+`GET /api/articles/feed`
+
+Can also take `limit` and `offset` query parameters like List Articles
+
+Authentication required, will return multiple articles created by followed users, ordered by most recent first.
