@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Post,
   Put,
@@ -41,6 +42,7 @@ export class ArticleController {
     return await this.articleService.getArticleFeed(currentUserId, query);
   }
 
+  @HttpCode(201)
   @Post('create')
   @UseGuards(AuthGuard)
   // @UsePipes(new ValidationPipe())
@@ -64,6 +66,7 @@ export class ArticleController {
     return this.articleService.buildArticleResponse(article);
   }
 
+  @HttpCode(204)
   @Delete('delete/:slug')
   @UseGuards(AuthGuard)
   async deleteArticleBySlug(
