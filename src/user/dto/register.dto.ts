@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString, Matches, MinLength } from 'class-validator';
 
 export class RegisterDto {
   @IsNotEmpty()
@@ -15,10 +15,12 @@ export class RegisterDto {
 
   @IsNotEmpty()
   @IsString()
+  @Matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/, {message: "phone mustbe a valid phone number"})
   readonly mobile: string;
 
   @IsNotEmpty()
   @IsString()
+  @MinLength(6)
   readonly password: string;
 
   @IsOptional()
