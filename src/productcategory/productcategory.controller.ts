@@ -3,7 +3,7 @@ import { ProductcategoryService } from './productcategory.service';
 import { CreateProductcategoryDto } from './dto/create-productcategory.dto';
 import { UpdateProductcategoryDto } from './dto/update-productcategory.dto';
 
-@Controller('api/product-category')
+@Controller('product-category')
 export class ProductcategoryController {
   constructor(private readonly productcategoryService: ProductcategoryService) {}
 

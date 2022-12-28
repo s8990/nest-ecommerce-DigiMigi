@@ -21,7 +21,7 @@ import { UpdateArticleDto } from '../dto/update-article.dto';
 import { ArticlesResponseInterface } from '../types/articlesResponseInterface.type';
 import { BackendValidationPipe } from '@/shared/pipes/backendValidation.pipe';
 
-@Controller('api/articles')
+@Controller('articles')
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
