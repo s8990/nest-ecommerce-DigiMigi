@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { hash } from 'bcrypt';
 import { ArticleEntity } from '@/article/entities/article.entity';
+import { ProductEntity } from '@/product/entities/product.entity';
 
 // export enum UserRole {
 //   SUPER_ADMIN = 'Super Admin',
@@ -64,4 +65,8 @@ export class UserEntity {
   @ManyToMany(() => ArticleEntity)
   @JoinTable()
   favorites: ArticleEntity[];
+
+  @ManyToMany(() => ProductEntity)
+  @JoinTable()
+  favoriteProducts: ProductEntity[];
 }

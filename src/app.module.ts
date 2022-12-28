@@ -8,9 +8,11 @@ import { dataSourceOptions } from 'db/data-source';
 import { AuthMiddleware } from '@/user/middlewares/auth.middleware';
 import { ArticleModule } from './article/article.module';
 import { ProfileModule } from './profile/profile.module';
+import { ProductModule } from './product/product.module';
+import { ProductcategoryModule } from './productcategory/productcategory.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOptions), TagModule, UserModule, ArticleModule, ProfileModule],
+  imports: [TypeOrmModule.forRoot(dataSourceOptions), TagModule, UserModule, ArticleModule, ProfileModule, ProductModule, ProductcategoryModule],
   controllers: [AppController],
   providers: [AppService],
 })
