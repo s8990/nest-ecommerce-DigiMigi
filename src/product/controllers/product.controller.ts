@@ -21,7 +21,7 @@ import { AuthGuard } from '@/user/guards/auth.guard';
 import { UpdateProductDto } from '@/product/dto/update-product.dto';
 import { ProductsResponseInterface } from '@/product/types/productsResponseInterface.type';
 
-@Controller('product')
+@Controller('v1/products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 

@@ -11,7 +11,7 @@ import {
 import { ProfileService } from '@/profile/services/profile.service';
 import { ProfileResponseInterface } from '@/profile/types/profileResponse.interface';
 
-@Controller('profiles')
+@Controller('v1/profiles')
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 

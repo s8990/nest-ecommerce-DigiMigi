@@ -21,7 +21,7 @@ import { UserEntity } from '@/user/entities/user.entity';
 import { AuthGuard } from '../guards/auth.guard';
 import { BackendValidationPipe } from '@/shared/pipes/backendValidation.pipe';
 
-@Controller('users')
+@Controller('v1/users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
