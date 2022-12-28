@@ -9,17 +9,17 @@ import {
   UseGuards,
   Put,
 } from '@nestjs/common';
-import { UserService } from '@/user/services/user.service';
+import { AuthGuard } from '@/user/guards/auth.guard';
+import { User } from '@/user/decorators/user.decorator';
+import { BackendValidationPipe } from '@/shared/pipes/backendValidation.pipe';
+import { UserEntity } from '@/user/entities/user.entity';
 import { CreateUserDto } from '@/user/dto/create-user.dto';
 import { UpdateUserDto } from '@/user/dto/update-user.dto';
+import { LoginDto } from '@/user/dto/login.dto';
+import { RegisterDto } from '@/user/dto/register.dto';
+import { UserService } from '@/user/services/user.service';
 import { AuthResponseInterface } from '@/user/types/authResponse.interface';
 import { UserResponseInterface } from '@/user/types/userResponse.interface';
-import { RegisterDto } from '@/user/dto/register.dto';
-import { LoginDto } from '@/user/dto/login.dto';
-import { User } from '@/user/decorators/user.decorator';
-import { UserEntity } from '@/user/entities/user.entity';
-import { AuthGuard } from '../guards/auth.guard';
-import { BackendValidationPipe } from '@/shared/pipes/backendValidation.pipe';
 
 @Controller('v1/users')
 export class UserController {

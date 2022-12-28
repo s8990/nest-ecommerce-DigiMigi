@@ -11,15 +11,15 @@ import {
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
-import { ArticleService } from '@/article/services/article.service';
 import { AuthGuard } from '@/user/guards/auth.guard';
 import { User } from '@/user/decorators/user.decorator';
-import { CreateArticleDto } from '../dto/create-article.dto';
-import { UserEntity } from '@/user/entities/user.entity';
-import { ArticleResponseInterface } from '../types/articleResponse.interface';
-import { UpdateArticleDto } from '../dto/update-article.dto';
-import { ArticlesResponseInterface } from '../types/articlesResponseInterface.type';
 import { BackendValidationPipe } from '@/shared/pipes/backendValidation.pipe';
+import { UserEntity } from '@/user/entities/user.entity';
+import { UpdateArticleDto } from '@/article/dto/update-article.dto';
+import { ArticleService } from '@/article/services/article.service';
+import { CreateArticleDto } from '@/article/dto/create-article.dto';
+import { ArticleResponseInterface } from '@/article/types/articleResponse.interface';
+import { ArticlesResponseInterface } from '@/article/types/articlesResponseInterface.type';
 
 @Controller('v1/articles')
 export class ArticleController {

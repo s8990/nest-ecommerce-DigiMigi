@@ -1,4 +1,4 @@
-import { ArticleEntity } from '../entities/article.entity';
+import { ArticleEntity } from '@/article/entities/article.entity';
 
 export interface ArticleResponseInterface {
   article: ArticleEntity;

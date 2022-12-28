@@ -4,12 +4,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, UpdateResult } from 'typeorm';
 import { sign } from 'jsonwebtoken';
 import { compare } from 'bcrypt';
+import { UserEntity } from '@/user/entities/user.entity';
 import { CreateUserDto } from '@/user/dto/create-user.dto';
 import { UpdateUserDto } from '@/user/dto/update-user.dto';
-import { UserEntity } from '@/user/entities/user.entity';
-import { UserResponseInterface } from '@/user/types/userResponse.interface';
-import { RegisterDto } from '@/user/dto/register.dto';
 import { LoginDto } from '@/user/dto/login.dto';
+import { RegisterDto } from '@/user/dto/register.dto';
+import { UserResponseInterface } from '@/user/types/userResponse.interface';
 import { AuthResponseInterface } from '@/user/types/authResponse.interface';
 
 @Injectable()

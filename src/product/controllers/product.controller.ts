@@ -11,14 +11,14 @@ import {
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
-import { ProductService } from '@/product/services/product.service';
-import { BackendValidationPipe } from '@/shared/pipes/backendValidation.pipe';
+import { AuthGuard } from '@/user/guards/auth.guard';
 import { User } from '@/user/decorators/user.decorator';
+import { BackendValidationPipe } from '@/shared/pipes/backendValidation.pipe';
 import { UserEntity } from '@/user/entities/user.entity';
 import { CreateProductDto } from '@/product/dto/create-product.dto';
-import { ProductResponseInterface } from '@/product/types/productResponse.interface';
-import { AuthGuard } from '@/user/guards/auth.guard';
 import { UpdateProductDto } from '@/product/dto/update-product.dto';
+import { ProductService } from '@/product/services/product.service';
+import { ProductResponseInterface } from '@/product/types/productResponse.interface';
 import { ProductsResponseInterface } from '@/product/types/productsResponseInterface.type';
 
 @Controller('v1/products')

@@ -2,14 +2,14 @@ import { UserEntity } from '@/user/entities/user.entity';
 import { HttpException, HttpStatus, Injectable, Param } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, getRepository, Repository } from 'typeorm';
-import { CreateProductDto } from '../dto/create-product.dto';
 import { ProductEntity } from '../entities/product.entity';
-import { ProductResponseInterface } from '../types/productResponse.interface';
 import slugify from 'slugify';
-import { UpdateProductDto } from '../dto/update-product.dto';
-import { ProductsResponseInterface } from '../types/productsResponseInterface.type';
-import { FollowEntity } from '@/profile/entities/follow.entity';
 import { ProductCategoryEntity } from '@/productcategory/entities/productcategory.entity';
+import { FollowEntity } from '@/profile/entities/follow.entity';
+import { CreateProductDto } from '@/product/dto/create-product.dto';
+import { UpdateProductDto } from '@/product/dto/update-product.dto';
+import { ProductsResponseInterface } from '@/product/types/productsResponseInterface.type';
+import { ProductResponseInterface } from '@/product/types/productResponse.interface';
 
 @Injectable()
 export class ProductService {
