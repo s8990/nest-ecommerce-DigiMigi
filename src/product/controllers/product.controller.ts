@@ -20,6 +20,7 @@ import { UpdateProductDto } from '@/product/dto/update-product.dto';
 import { ProductService } from '@/product/services/product.service';
 import { ProductResponseInterface } from '@/product/types/productResponse.interface';
 import { ProductsResponseInterface } from '@/product/types/productsResponseInterface.type';
+import { FindProductsDTO } from '@/product/dto/query/find-products.dto';
 
 @Controller('v1/products')
 export class ProductController {
@@ -28,7 +29,7 @@ export class ProductController {
   @Get()
   async findAll(
     @User('id') currentUserId: number,
-    @Query() query: any,
+    @Query() query: FindProductsDTO,
   ): Promise<ProductsResponseInterface> {
     return await this.productService.findAll(currentUserId, query);
   }
