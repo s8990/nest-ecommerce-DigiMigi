@@ -12,11 +12,11 @@ import { hash } from 'bcrypt';
 import { ArticleEntity } from '@/article/entities/article.entity';
 import { ProductEntity } from '@/product/entities/product.entity';
 
-// export enum UserRole {
-//   SUPER_ADMIN = 'Super Admin',
-//   ADMIN = 'Admin',
-//   NOMER_USER = 'Normal User',
-// }
+export enum UserRole {
+  SUPER_ADMIN = 'Super_Admin',
+  ADMIN = 'Admin',
+  USER = 'User',
+}
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -26,13 +26,13 @@ export class UserEntity {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ unique: true })
   username: string;
 
-  @Column({ default: '' })
+  @Column({ unique: true, default: '' })
   email: string;
 
-  @Column()
+  @Column({ unique: true })
   mobile: string;
 
   @Column({ select: false })
@@ -47,12 +47,12 @@ export class UserEntity {
   @Column({ default: false })
   isActive: boolean;
 
-  //   @Column({
-  //     type: 'enum',
-  //     enum: UserRole,
-  //     default: UserRole.GHOST,
-  //   })
-  //   role: UserRole[];
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+    default: UserRole.USER,
+  })
+  role: UserRole[];
 
   @BeforeInsert()
   async hashPassword() {

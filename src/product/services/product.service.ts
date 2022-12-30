@@ -10,6 +10,7 @@ import { CreateProductDto } from '@/product/dto/create-product.dto';
 import { UpdateProductDto } from '@/product/dto/update-product.dto';
 import { ProductsResponseInterface } from '@/product/types/productsResponseInterface.type';
 import { ProductResponseInterface } from '@/product/types/productResponse.interface';
+import { FindProductsDTO } from '../dto/query/find-products.dto';
 
 @Injectable()
 export class ProductService {
@@ -26,7 +27,7 @@ export class ProductService {
 
   async findAll(
     currentUserId: number,
-    query: any,
+    query: FindProductsDTO,
   ): Promise<ProductsResponseInterface> {
     const queryBuilder = this.productRepository
       .createQueryBuilder('products')
@@ -61,10 +62,22 @@ export class ProductService {
       });
     }
 
+    if (query.minPrice) {
+      queryBuilder.andWhere('products.price >= :minPrice', {
+        minPrice: query.minPrice,
+      });
+    }
+
+    if (query.maxPrice) {
+      queryBuilder.andWhere('products.price <= :maxPrice', {
+        maxPrice: query.maxPrice,
+      });
+    }
+
     if (query.productCategoryId) {
       const productCategory = await this.productCategoryRepository.findOne({
         where: {
-          id: query.productCategoryId,
+          id: Number(query.productCategoryId),
         },
       });
       queryBuilder.andWhere('products.productCategoryId = :id', {
@@ -77,11 +90,11 @@ export class ProductService {
     const productsCount = await queryBuilder.getCount();
 
     if (query.limit) {
-      queryBuilder.limit(query.limit);
+      queryBuilder.limit(Number(query.limit));
     }
 
     if (query.offset) {
-      queryBuilder.offset(query.offset);
+      queryBuilder.offset(Number(query.offset));
     }
 
     let favoriteIds: number[] = [];

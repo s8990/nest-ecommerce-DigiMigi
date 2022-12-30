@@ -6,6 +6,8 @@ import { ProductEntity } from './entities/product.entity';
 import { UserEntity } from '@/user/entities/user.entity';
 import { FollowEntity } from '@/profile/entities/follow.entity';
 import { ProductCategoryEntity } from '@/productcategory/entities/productcategory.entity';
+import { UserService } from '@/user/services/user.service';
+import { AuthGuard } from '@/user/guards/auth.guard';
 
 @Module({
   imports: [

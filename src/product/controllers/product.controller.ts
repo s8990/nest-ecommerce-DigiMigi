@@ -14,13 +14,14 @@ import {
 import { AuthGuard } from '@/user/guards/auth.guard';
 import { User } from '@/user/decorators/user.decorator';
 import { BackendValidationPipe } from '@/shared/pipes/backendValidation.pipe';
-import { UserEntity } from '@/user/entities/user.entity';
+import { UserEntity, UserRole } from '@/user/entities/user.entity';
 import { CreateProductDto } from '@/product/dto/create-product.dto';
 import { UpdateProductDto } from '@/product/dto/update-product.dto';
 import { ProductService } from '@/product/services/product.service';
 import { ProductResponseInterface } from '@/product/types/productResponse.interface';
 import { ProductsResponseInterface } from '@/product/types/productsResponseInterface.type';
 import { FindProductsDTO } from '@/product/dto/query/find-products.dto';
+import { Roles } from '@/user/decorators/roles.decorator';
 
 @Controller('v1/products')
 export class ProductController {
@@ -34,9 +35,10 @@ export class ProductController {
     return await this.productService.findAll(currentUserId, query);
   }
 
-  @HttpCode(201)
   @Post('create')
+  @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
   @UseGuards(AuthGuard)
+  @HttpCode(201)
   // @UsePipes(new ValidationPipe())
   @UsePipes(new BackendValidationPipe())
   async create(
@@ -58,9 +60,10 @@ export class ProductController {
     return this.productService.buildProductResponse(product);
   }
 
-  @HttpCode(204)
   @Delete('delete/:slug')
+  @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
   @UseGuards(AuthGuard)
+  @HttpCode(204)
   async deleteProductBySlug(
     @User('id') currentUserId: number,
     @Param('slug') slug: string,
@@ -69,6 +72,7 @@ export class ProductController {
   }
 
   @Put('update/:slug')
+  @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
   @UseGuards(AuthGuard)
   @UsePipes(new BackendValidationPipe())
   async updateProductBySlug(

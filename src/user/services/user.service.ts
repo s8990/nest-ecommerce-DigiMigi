@@ -191,7 +191,8 @@ export class UserService {
       {
         id: user.id,
         username: user.username,
-        email: user.email,
+        mobile: user.mobile,
+        role: user.role,
       },
       JWT_SECRET,
     );

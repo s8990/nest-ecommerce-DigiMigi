@@ -25,6 +25,9 @@ export class ProductEntity {
   @Column({ default: '' })
   body: string;
 
+  @Column()
+  price: number;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 

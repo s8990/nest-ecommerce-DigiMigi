@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class FindProductsDTO {
   @IsOptional()
@@ -11,9 +11,21 @@ export class FindProductsDTO {
 
   @IsOptional()
   @IsString()
-  readonly limit?: string;
+  readonly minPrice?: string;
 
   @IsOptional()
   @IsString()
-  readonly offset?: string;
+  readonly maxPrice?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  readonly favorited?: boolean;
+
+  @IsOptional()
+  @IsNumber()
+  readonly limit?: number;
+
+  @IsOptional()
+  @IsNumber()
+  readonly offset?: number;
 }
