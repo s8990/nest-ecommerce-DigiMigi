@@ -16,10 +16,10 @@ export class AuthMiddleware implements NestMiddleware {
       return;
     }
 
-    const token = req.headers.authorization.split('Bearer ')[1];
+    const accessToken = req.headers.authorization.split('Bearer ')[1];
 
     try {
-      const decode = verify(token, JWT_SECRET);
+      const decode = verify(accessToken, JWT_SECRET);
       const user = await this.userservice.findById(decode.id);
       req.user = user;
       next();

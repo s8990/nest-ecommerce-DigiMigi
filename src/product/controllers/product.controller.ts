@@ -22,6 +22,7 @@ import { ProductResponseInterface } from '@/product/types/productResponse.interf
 import { ProductsResponseInterface } from '@/product/types/productsResponseInterface.type';
 import { FindProductsDTO } from '@/product/dto/query/find-products.dto';
 import { Roles } from '@/user/decorators/roles.decorator';
+import { Headers } from '@nestjs/common';
 
 @Controller('v1/products')
 export class ProductController {
@@ -29,9 +30,11 @@ export class ProductController {
 
   @Get()
   async findAll(
+    @Headers() headers,
     @User('id') currentUserId: number,
     @Query() query: FindProductsDTO,
   ): Promise<ProductsResponseInterface> {
+    console.log('req.headers :: ', headers)
     return await this.productService.findAll(currentUserId, query);
   }
 

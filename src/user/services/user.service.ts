@@ -91,7 +91,7 @@ export class UserService {
     return {
       user: {
         ...user,
-        token: this.generateJwt(user),
+        accessToken: this.generateJwt(user),
       },
     };
   }
@@ -100,7 +100,7 @@ export class UserService {
     return {
       user: {
         ...user,
-        token: this.generateJwt(user),
+        accessToken: this.generateJwt(user),
       },
     };
   }
@@ -202,7 +202,7 @@ export class UserService {
     return {
       user: {
         ...user,
-        token: this.generateJwt(user),
+        accessToken: this.generateJwt(user),
       },
     };
   }

@@ -15,7 +15,7 @@ export class RegisterDto {
 
   @IsNotEmpty()
   @IsString()
-  @Matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/, {message: "phone mustbe a valid phone number"})
+  // @Matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/, {message: "phone mustbe a valid phone number"})
   readonly mobile: string;
 
   @IsNotEmpty()
@@ -26,6 +26,7 @@ export class RegisterDto {
   @IsOptional()
   @IsString()
   readonly bio: string;
+  
   @IsOptional()
   @IsString()
   readonly image: string;

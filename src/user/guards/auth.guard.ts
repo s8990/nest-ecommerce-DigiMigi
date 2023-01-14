@@ -40,9 +40,9 @@ export class AuthGuard implements CanActivate {
     if (roles?.length) {
       // 2) Grab the JWT from the request header and verify it
       const request = context.switchToHttp().getRequest();
-      const token = request.headers?.authorization?.split('Bearer ')[1];
+      const accessToken = request.headers?.authorization?.split('Bearer ')[1];
       try {
-        const payload = (await jwt.verify(token, JWT_SECRET)) as JWTPayload;
+        const payload = (await jwt.verify(accessToken, JWT_SECRET)) as JWTPayload;
 
         const user = await this.userRepository.findOne({
           where: {
